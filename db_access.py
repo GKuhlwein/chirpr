@@ -34,6 +34,9 @@ def add_user(handle):
     conn = get_db()
     conn.execute('INSERT INTO user (handle, admin) values (:handle, :admin)',
                  {'handle': handle, 'admin': 0})
+    pswrd = request.form.get('pass','')
+    if pswrd != 6:
+        pass
     conn.commit()
 
 
