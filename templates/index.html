@@ -1,20 +1,10 @@
 {% extends "base.html" %}
 {% block body %}
-  <h2>Skeleton AirCon306</h2>
+  <h2>Skeleton AirPost306</h2>
   <h3>Creat New Account</h3>
   <form action="{{ url_for('add_user') }}" method="post">
-    <label>Username:<input type='text' name='handle' value='AirYou310'/></label><br/>
-    <label>Password:<input type='text' name='pass' value='------'/></label><br/>
+    <label>Username:<input type='text' name='handle'/></label><br/>
+    <label>Password:<input type='password' name='pass'/></label><br/>
     <input type="submit" value="Submit"><br/>
   </form>
-  <h3>Sign In</h3>
-  <form action="{{ url_for('add_user') }}" method="post">
-    <label>Username:<input type='text' name='handle' value='AirYou310'/></label><br/>
-    <label>Password:<input type='text' name='pass' value='------'/></label><br/>
-    <input type="submit" value="Submit"><br/>
-  </form>
-  <p>
-    This application doesn't really do anything, or even look that nice.
-    But it will after I get a hold of it. HINT: For better experience press and hold Ctrl + T, or just smile and wait for a couple of weeks.
-  </p>
 {% endblock %}

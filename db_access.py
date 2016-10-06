@@ -23,6 +23,9 @@ def get_all_users():
     conn = get_db()
     return conn.execute('SELECT id, handle, admin FROM user').fetchall()
 
+def get_user_by_handle(handle):
+    conn = get_db()
+    return conn.execute('SELECT id, handle FROM user WHERE handle=:handle', {'handle': handle}).fetchone()
 
 def delete_user(user_id):
     conn = get_db()
@@ -30,13 +33,10 @@ def delete_user(user_id):
     conn.commit()
 
 
-def add_user(handle):
+def add_user(handle, password):
     conn = get_db()
-    conn.execute('INSERT INTO user (handle, admin) values (:handle, :admin)',
-                 {'handle': handle, 'admin': 0})
-    pswrd = request.form.get('pass','')
-    if pswrd != 6:
-        pass
+    conn.execute('INSERT INTO user (handle, admin, password) values (:handle, :admin, :password)',
+                {'handle': handle, 'admin': 0, 'password': password})
     conn.commit()
 
 

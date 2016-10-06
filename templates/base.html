@@ -2,11 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>AirCon306</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AirPost306</title>
+    <link href="/static/bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-  <h1>AirCon306</h1>
+  <img src= '/static/airpost306.png'/>
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+          <div id=mes class="alert alert-{{ category }} alert-dismissible" role="alert">
+            {{ message }}
+          </div>
+        {% endfor %}
+    {% endif %}
+  {% endwith %}
+  <h1>AirPost306</h1>
     {% block body %}{% endblock %}
 </body>
 </html>

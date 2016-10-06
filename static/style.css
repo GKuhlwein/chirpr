@@ -5,6 +5,10 @@ body {
     margin: 20px;
 }
 
+#mes {
+    width: 300px;
+}
+
 table, th, td {
     border: 1px solid darkblue;
     padding: 5px;
@@ -13,3 +17,7 @@ table, th, td {
 table {
     border-collapse: collapse;
 }
+
+img {
+    width:200px;
+    height:200px;
