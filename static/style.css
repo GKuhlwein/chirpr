@@ -1,23 +1,78 @@
 body {
-    background-color: cyan;
+    background-color: white;
     color: darkcyan;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     margin: 20px;
+    padding-top: 70px; 
 }
 
 #mes {
     width: 300px;
 }
 
+#usrnm {
+    margin-right:fixed;
+}
+
 table, th, td {
-    border: 1px solid darkblue;
-    padding: 5px;
+    background-color: darkcyan;
 }
 
-table {
-    border-collapse: collapse;
+table, th, td  > a {
+    color:white;
 }
 
-img {
-    width:200px;
-    height:200px;
+.navbar-inverse {
+    background-color:darkcyan;
+    border: 1px solid darkcyan;
+}
+
+.navbar-inverse .navbar-nav > li  > a{
+    color:white;
+}
+
+.btn {
+    background-color:darkcyan;
+    color:white;
+}
+
+.btn:hover {
+    background-color:cyan;
+    color:white;
+    font-weight:bold;
+}
+
+a:hover {
+    color:white;
+    font-weight:bold;
+}
+
+.imsiz {
+    width:50px;
+    height:50px;
+}
+
+.panel-default .panel-heading {
+    border: none;
+    box-shadow: none;
+    color:white;
+    background-color:darkcyan;
+    border: 1px solid white;
+}
+
+.panel {
+    background-color:darkcyan;
+    border: 1px solid darkcyan;
+}
+
+.panel .panel-default .panel-heading  .table {
+    border: 1px solid darkcyan;
+}
+
+thead {
+    border: 1px solid white;
+}
+
+tbody {
+    border: 1px solid white;
+}

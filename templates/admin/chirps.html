@@ -1,22 +1,31 @@
 {% extends "base.html" %}
 {% block body %}
-  <h2>Chirps</h2>
+  <form action="{{ url_for('chirp') }}" method="post">
+    <label>Post Body<input type="text" class="form-control" placeholder='PostCap' name='cap'/></label><br/>
+    <input class="btn" type="submit" value="Submit"><br/>
+  </form>
     {% if chirps %}
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th><th>Handle</th><th>Body</th><th>Timestamp</th><th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-        {% for chirp in chirps %}
-          <tr>
-            <td>{{ chirp.id }}</td><td>{{ chirp.handle }}</td><td>{{ chirp.body }}</td><td>{{ chirp.datetime }}</td>
-            <td><a href="{{url_for('delete_chirp', chirp_id=chirp.id)}}">Delete</a></td>
-          </tr>
-        {% endfor %}
-        </tbody>
-      </table>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">APosts</div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th><th>Handle</th><th>Post</th><th>Timestamp</th><th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for chirp in chirps %}
+              <tr>
+                <td>{{ chirp.id }}</td><td>{{ chirp.handle }}</td><td>{{ chirp.body }}</td><td>{{ chirp.datetime }}</td>
+                <td><a href="{{url_for('delete_chirp', chirp_id=chirp.id)}}">Delete</a></td>
+              </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
     {% else %}
       <h4>There are no chirps</h4>
     {% endif %}

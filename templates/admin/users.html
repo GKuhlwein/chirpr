@@ -1,25 +1,57 @@
 {% extends "base.html" %}
 {% block body %}
-  <h2>Members</h2>
-    {% if users %}
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th><th>Handle</th><!--<th>Admin</th>--><th>Delete</th>
-        </tr>
-      </thead>
-      <tbody>
-      {% for user in users %}
-        <tr>
-          <td>{{ user.id }}</td>
-          <td>{{ user.handle }}</td>
-          <!--<td>{{ 'Yes' if user.admin else 'No' }}</td>-->
-          <td><a href="{{ url_for('delete_user', user_id=user.id) }}">Delete</a></td>
-        </tr>
-      {% endfor %}
-      </tbody>
-    </table>
-  {% else %}
-    <h4>There are no users</h4>
-  {% endif %}
+    <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">Not Following</div>
+            {% if users %}
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th><th>Username</th><!--<th>Admin</th>--><th>Follow</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                {% for user in users %}
+                  <td>{{ user.id }}</td>
+                  <td>{{ user.handle }}</td>
+                  <!--<td>{{ 'Yes' if user.admin else 'No' }}</td>-->
+                  <!--<td><a href="{{ url_for('delete_user', user_id=user.id) }}">Delete</a></td> -->
+                  <td><a href="{{ url_for('follow_user', user_id=user.id) }}">Follow</a></td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+            {% else %}
+            <h4>There are no users</h4>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">Following</div>
+          {% if following %}
+            <table class="table">
+              <thead>
+                <tr>
+                <th>Follower</th><th>Leader</th><!--<th>Admin</th>--><th>Unfollow</th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for follow in following %}
+                    <tr>
+                      <td>{{ follow.follow_id }}</td>
+                      <td>{{ follow.lead_id }}</td>
+                      <td><a href="{{ url_for('unfollow_user', user_id=follow.lead_id) }}">Unfollow</a></td>
+                    </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+          <h4>You are not following anyone.</h4>
+          {% endif %}
+        </div>
+      </div>
+    </div>
 {% endblock %}

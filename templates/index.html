@@ -1,10 +1,23 @@
 {% extends "base.html" %}
 {% block body %}
-  <h2>Skeleton AirPost306</h2>
-  <h3>Creat New Account</h3>
+{% if logged != True %}
+<h3>AirPost306</h3>
+<h3>Create New Account</h3>
+<div class="col-md-4">
   <form action="{{ url_for('add_user') }}" method="post">
-    <label>Username:<input type='text' name='handle'/></label><br/>
-    <label>Password:<input type='password' name='pass'/></label><br/>
-    <input type="submit" value="Submit"><br/>
+    <label>Username:<input type='text' class="form-control" placeholder='my_name' name='handle'/></label><br/>
+    <label>Password:<input type='password' class="form-control" placeholder='....' name='pass'/></label><br/>
+    <label>Verify Password:<input type='password' class="form-control" placeholder='....' name='pass2'/></label><br/>
+    <input class="btn" type="submit" value="Submit"><br/>
   </form>
+</div>
+<div class='col-md-4'>
+  <h3>Sign In:</h3>
+  <form action="{{ url_for('sign_in') }}" method="post">
+    <label>Username:<input type="text" class="form-control" placeholder='my_name' name='handle2'/></label><br/>
+    <label>Password:<input type='password' class="form-control" placeholder='....' name='pass3'/></label><br/>
+    <input class="btn" type="submit" value="Submit"><br/>
+  </form>
+</div>
+{% endif %}
 {% endblock %}
