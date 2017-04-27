@@ -1,6 +1,6 @@
 # Chirpr
 
-This is the skeleton of a Twitter clone project.
+This is the skeleton of a Twitter clone project!
 
 ## Install Python 3 and Sqlite3
 
