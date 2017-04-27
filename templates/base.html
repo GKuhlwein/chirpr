@@ -33,7 +33,7 @@
   {% endif %}
   {% if USERname %}
     <div id=usrnm>
-      <h1>{{ USERname }}</h1>
+      <a href="{{url_for('profile'}}">{{ USERname }}</a>
     </div>
   {% endif %}
   {% with messages = get_flashed_messages(with_categories=true) %}

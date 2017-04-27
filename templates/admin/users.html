@@ -2,12 +2,12 @@
 {% block body %}
     <div class="col-md-4">
         <div class="panel panel-default">
-          <div class="panel-heading">Not Following</div>
+          <div class="panel-heading">Users</div>
             {% if users %}
             <table class="table">
               <thead>
                 <tr>
-                  <th>ID</th><th>Username</th><!--<th>Admin</th>--><th>Follow</th>
+                  <th>ID</th><th>Username</th><th>Follow</th>
                 </tr>
               </thead>
               <tbody>
@@ -15,7 +15,6 @@
                 {% for user in users %}
                   <td>{{ user.id }}</td>
                   <td>{{ user.handle }}</td>
-                  <!--<td>{{ 'Yes' if user.admin else 'No' }}</td>-->
                   <!--<td><a href="{{ url_for('delete_user', user_id=user.id) }}">Delete</a></td> -->
                   <td><a href="{{ url_for('follow_user', user_id=user.id) }}">Follow</a></td>
                 </tr>
@@ -35,7 +34,7 @@
             <table class="table">
               <thead>
                 <tr>
-                <th>Follower</th><th>Leader</th><!--<th>Admin</th>--><th>Unfollow</th>
+                <th>Follower</th><th>Leader</th><th>Unfollow</th>
                 </tr>
               </thead>
               <tbody>

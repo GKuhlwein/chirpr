@@ -1,5 +1,7 @@
 from flask import Flask, request, g, render_template, redirect, url_for, flash, session
 
+from time import gmtime, strftime
+
 import db_access
 
 app = Flask(__name__)
@@ -12,16 +14,19 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/admin/users')
+@app.route('/users')
 def users():
-    user_list = db_access.get_all_users()
-    following_list = db_access.get_all_followers()
+    handle = session['handle']
+    user = db_access.get_user_by_handle(handle)
+    follow_id = user['id']
+    user_list = db_access.get_all_users(follow_id)
+    following_list = db_access.get_all_followers(follow_id)
     USERname = session['handle']
     logged = session['log']
     return render_template('admin/users.html', following=following_list, users=user_list, USERname=USERname, logged=logged)
 
-    
-@app.route('/admin/user/delete/<user_id>')
+
+@app.route('/user/delete/<user_id>')
 def delete_user(user_id):
     db_access.delete_user(user_id)
     handle = session['handle']
@@ -31,25 +36,25 @@ def delete_user(user_id):
     else:    
         return redirect(url_for('sign_out'))
 
-        
-@app.route('/admin/user/unfollow_user/<user_id>')
+
+@app.route('/user/unfollow_user/<user_id>')
 def unfollow_user(user_id):
     db_access.unfollow_user(user_id)
     handle = session['handle']
     user = db_access.get_user_by_handle(handle)
     return redirect(url_for('users'))
 
-        
+
 @app.route('/in/user/follow/<user_id>')
 def follow_user(user_id):
-    following = db_access.get_all_followers()
     handle = session['handle']
     lead_id = user_id
     user = db_access.get_user_by_handle(handle)
     follow_id = user['id']
+    following = db_access.get_all_followers(follow_id)
     db_access.follow_user(lead_id, follow_id)
     return redirect(url_for('users'))
-        
+
 
 @app.route('/out')
 def sign_out():
@@ -57,8 +62,8 @@ def sign_out():
     del session['log']
     flash('Logged Out', 'success')
     return render_template('index.html')    
-    
-@app.route('/admin/user/sign_in', methods=['POST'])
+
+@app.route('/user/sign_in', methods=['POST'])
 def sign_in():
     handle = request.form.get('handle2')
     password = request.form.get('pass3')
@@ -73,9 +78,9 @@ def sign_in():
     else:
         flash('Incorrect username or password!', 'danger')
         return render_template('index.html')
-   
-    
-@app.route('/admin/user/add', methods=['POST'])
+
+
+@app.route('/user/add', methods=['POST'])
 def add_user():
     handle = request.form.get('handle')
     password = request.form.get('pass')
@@ -96,25 +101,37 @@ def add_user():
             db_access.add_user(handle, password)
             logged = True
             session['log'] = logged
+            handle = session['handle']
+            user = db_access.get_user_by_handle(handle)
+            lead_id = user['id']
+            follow_id = user['id']
+            db_access.follow_user(lead_id, follow_id)
             return redirect(url_for('chirps'))
         elif password != password2:
             flash('Passwords didn\'t match!', 'danger')
             return render_template('index.html')
 
 
-@app.route('/in/chirp')
+@app.route('/in/chirp', methods=['POST'])
 def chirp():
-    USERname = session['handle']
-    logged = session['log']
-    db_access.chirp(post_id, post_body, handle)
-    return render_template('admin/chirps.html', logged=logged, USERname=USERname)
+    handle = session['handle']
+    body = request.form.get('cap')
+    time = strftime("%Y-%m-%d %H:%M:%S", gmtime())
+    user = db_access.get_user_by_handle(handle)
+    id = user['id']
+    db_access.chirp(body, id, time)
+    print ('got information')
+    return redirect(url_for('chirps'))
+
     
-            
 @app.route('/in/chirps')
 def chirps():
     USERname = session['handle']
     logged = session['log']
-    chirp_list = db_access.get_all_chirps()
+    handle = session['handle']
+    user = db_access.get_user_by_handle(handle)
+    id = user['id']
+    chirp_list = db_access.get_all_chirps_by_following(id)
     return render_template('admin/chirps.html', chirps=chirp_list, logged=logged, USERname=USERname)
 
 

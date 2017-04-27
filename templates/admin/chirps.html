@@ -7,7 +7,7 @@
     {% if chirps %}
     <div class="col-md-4">
       <div class="panel panel-default">
-        <div class="panel-heading">APosts</div>
+        <div class="panel-heading">Posts</div>
           <table class="table">
             <thead>
               <tr>
@@ -17,7 +17,7 @@
             <tbody>
             {% for chirp in chirps %}
               <tr>
-                <td>{{ chirp.id }}</td><td>{{ chirp.handle }}</td><td>{{ chirp.body }}</td><td>{{ chirp.datetime }}</td>
+                <td>{{ chirp.id }}</td><td class='name'>{{ chirp.handle }}</td><td>{{ chirp.body }}</td><td>{{ chirp.datetime }}</td>
                 <td><a href="{{url_for('delete_chirp', chirp_id=chirp.id)}}">Delete</a></td>
               </tr>
             {% endfor %}

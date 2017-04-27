@@ -12,11 +12,22 @@ def get_all_chirps():
         WHERE c.user_id = u.id
     ''').fetchall()
 
-    
-def chirp(post_id, post_body, handle):
+def get_all_chirps_by_following(id):
     conn = get_db()
-    conn.execute('INSERT INTO follow (post_id, post_body, handle) VALUES (:post_id, :post_body, handle)',
-                {'post_id': post_id, 'post_body': post_body, 'handle': handle})
+    return conn.execute('''
+        SELECT c.id, c.body, c.user_id, c.datetime, u.handle
+        FROM chirp c, user u, follow f
+        WHERE c.user_id = f.lead_id
+        and f.follow_id = :id
+        and u.id = f.lead_id
+        ORDER BY c.datetime asc
+    ''', {'id': id}).fetchall()
+    
+def chirp(body, id, time):
+    conn = get_db()
+    conn.execute('INSERT INTO chirp (body, datetime, user_id) VALUES (:body, :datetime, :user_id)',
+                {'body': body, 'datetime': time, 'user_id': id})
+    conn.commit()
     
 def delete_chirp(chirp_id):
     conn = get_db()
@@ -24,9 +35,9 @@ def delete_chirp(chirp_id):
     conn.commit()
 
 
-def get_all_users():
+def get_all_users(follow_id):
     conn = get_db()
-    return conn.execute('SELECT id, handle, admin FROM user').fetchall()
+    return conn.execute('SELECT id, handle, admin FROM user WHERE id != :follow_id', {'follow_id': follow_id}).fetchall()
     
     
 def follow_user(lead_id, follow_id):
@@ -35,10 +46,10 @@ def follow_user(lead_id, follow_id):
                 {'lead_id': lead_id, 'follow_id': follow_id})
     conn.commit()
     
-
-def get_all_followers():
+    
+def get_all_followers(follow_id):
     conn = get_db()
-    return conn.execute('SELECT lead_id, follow_id FROM follow').fetchall()
+    return conn.execute('SELECT lead_id, follow_id FROM follow WHERE follow_id = :follow_id AND follow_id != lead_id', {'follow_id': follow_id}).fetchall()
     
 
 def get_user_by_handle(handle):
